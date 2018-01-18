@@ -22,56 +22,29 @@ RUN apt-get install -y unzip
 # ------------------------------------------------------
 # --- Download Android SDK tools into $ANDROID_HOME
 
-RUN cd /opt && wget -q https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip -O android-sdk.zip
-RUN cd /opt && unzip android-sdk.zip
-RUN cd /opt && rm -f android-sdk.zip
+# Install Android SDK installer
+ARG ANDROID_SDK_BUILD=3859397
+ARG ANDROID_SDK_SHA256=444e22ce8ca0f67353bda4b85175ed3731cae3ffa695ca18119cbacef1c1bea0
+RUN curl -o android-sdk.zip "https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_BUILD}.zip" \
+  && echo "${ANDROID_SDK_SHA256} android-sdk.zip" | sha256sum -c \
+  && unzip -C android-sdk.zip -d "${ANDROID_HOME}" \
+  && rm *.zip
 
-ENV PATH ${PATH}:${ANDROID_HOME}
+COPY tools /opt/sdk-tools
 
+ENV PATH ${PATH}:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:/opt/sdk-tools
 
-# ------------------------------------------------------
-# --- Install Android SDKs and other build packages
-
-# Other tools and resources of Android SDK
-#  you should only install the packages you need!
-# To get a full list of available options you can use:
-#  android list sdk --no-ui --all --extended
-# (!!!) Only install one package at a time, as "echo y" will only work for one license!
-#       If you don't do it this way you might get "Unknown response" in the logs,
-#         but the android SDK tool **won't** fail, it'll just **NOT** install the package.
-RUN echo y | touch /root/.android/repositories.cfg
-RUN echo y | android update sdk --no-ui --all --filter platform-tools | grep 'package installed'
-#RUN echo y | android update sdk --no-ui --all --filter extra-android-support | grep 'package installed'
-
-# SDKs
-# Please keep these in descending order!
-RUN echo y | android update sdk --no-ui --all --filter android-27 | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter android-26 | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter android-25 | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter android-17 | grep 'package installed'
-
-# build tools
-# Please keep these in descending order!
-RUN echo y | android update sdk --no-ui --all --filter build-tools-26.0.2 | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter build-tools-26.0.1 | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter build-tools-25.0.3 | grep 'package installed'
-
-# Extras
-RUN echo y | android update sdk --no-ui --all --filter extra-android-m2repository | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter extra-google-m2repository | grep 'package installed'
-RUN echo y | android update sdk --no-ui --all --filter extra-google-google_play_services | grep 'package installed'
-
-# Copy install tools
-COPY tools /opt/tools
-
-#Copy accepted android licenses
-COPY licenses ${ANDROID_HOME}/licenses
-
-ENV PATH ${PATH}:/opt/tools
-# Update SDK
-RUN /opt/tools/android-accept-licenses.sh android update sdk --no-ui --obsolete --force
-
-RUN apt-get clean
-
-RUN chown -R 1000:1000 $ANDROID_HOME
-VOLUME ["/opt/android-sdk-linux"]
+RUN sdkmanager --list \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager --update" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;23.0.3" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;24.0.3" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;25.0.3" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;26.0.2" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;27.0.3" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-17" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-23" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-24" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-25" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-26" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-27" \
+  && sdkmanager --list
