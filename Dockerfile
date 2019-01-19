@@ -46,10 +46,12 @@ RUN sdkmanager --list \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;25.0.3" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;26.0.2" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;27.0.3" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;28.0.3" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-17" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-23" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-24" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-25" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-26" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-27" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-28" \
   && sdkmanager --list
