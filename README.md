@@ -9,7 +9,7 @@ Android API 26\
 Android API 25\
 Android API 23\
 Android API 24\
-Android API 17\
+Android API 17
 
 ## Supported Build Tools versions
 
@@ -18,7 +18,7 @@ Android API 17\
 26.0.2\
 25.0.3\
 24.0.3\
-23.0.3\
+23.0.3
 
 ## Usage with Bitbucket Pipelines
 
