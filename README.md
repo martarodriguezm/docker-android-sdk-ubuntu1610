@@ -16,7 +16,6 @@ Android API 17
 28.0.3
 27.0.3
 26.0.2
-26.0.1
 25.0.3
 24.0.3
 23.0.3
@@ -37,9 +36,9 @@ pipelines:
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@".../.../androidapp.apk"
 ```
 
-How to declare BB_AUTH_STRING environment variable in Bitbucket: * [Bitbucket Docs](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html)
+How to declare BB_AUTH_STRING environment variable in Bitbucket: [Bitbucket Docs](https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html)
 
-This is the sh file I use to compile my projects:
+This is the build.sh file I use to compile my projects:
 
 ```bash
 #!/bin/sh
