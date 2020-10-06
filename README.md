@@ -3,6 +3,8 @@
 
 ## Supported Android API versions
 
+Android API 30\
+Android API 29\
 Android API 28\
 Android API 27\
 Android API 26\
@@ -13,6 +15,7 @@ Android API 17
 
 ## Supported Build Tools versions
 
+29.0.2\
 28.0.3\
 27.0.3\
 26.0.2\
