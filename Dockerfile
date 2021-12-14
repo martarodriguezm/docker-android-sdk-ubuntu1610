@@ -14,8 +14,8 @@ RUN apt-get update -qq
 # Dependencies to execute Android builds
 #RUN dpkg --add-architecture i386
 #RUN apt-get update -qq
-#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-8-jdk libc6:i386 libstdc++6:i386 libgcc1:i386 libncurses5:i386 libz1:i386
-RUN apt-get install -y openjdk-8-jdk wget expect
+#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-11-jdk libc6:i386 libstdc++6:i386 libgcc1:i386 libncurses5:i386 libz1:i386
+RUN apt-get install -y openjdk-11-jdk wget expect
 RUN apt-get install -y curl
 RUN apt-get install -y unzip
 
@@ -48,6 +48,8 @@ RUN sdkmanager --list \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;27.0.3" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;28.0.3" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;29.0.2" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;30.0.3" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager build-tools;31.0.0" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-17" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-23" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-24" \
@@ -57,4 +59,5 @@ RUN sdkmanager --list \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-28" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-29" \
   && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-30" \
+  && /opt/sdk-tools/android-accept-licenses.sh "sdkmanager sources;android-31" \
   && sdkmanager --list
