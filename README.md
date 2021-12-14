@@ -3,6 +3,7 @@
 
 ## Supported Android API versions
 
+Android API 31\
 Android API 30\
 Android API 29\
 Android API 28\
